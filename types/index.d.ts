@@ -365,6 +365,7 @@ interface TakePictureOptions {
   doNotSave?: boolean;
   pauseAfterCapture?: boolean;
   writeExif?: boolean | { [name: string]: any };
+  saveInDirectory?: string;
 
   /** Android only */
   fixOrientation?: boolean;
@@ -391,6 +392,7 @@ interface RecordOptions {
   mute?: boolean;
   mirrorVideo?: boolean;
   path?: string;
+  saveInDirectory?: string;
   videoBitrate?: number;
 
   /** iOS only */

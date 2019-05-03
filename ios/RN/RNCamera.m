@@ -899,7 +899,13 @@ BOOL _sessionInterrupted = NO;
 
                     NSMutableDictionary *response = [[NSMutableDictionary alloc] init];
 
-                    NSString *path = [RNFileSystem generatePathInDirectory:[[RNFileSystem cacheDirectoryPath] stringByAppendingPathComponent:@"Camera"] withExtension:@".jpg"];
+                    NSString *path = nil;
+                    if (options[@"saveInDirectory"]) {
+                        NSString *directory = options[@"saveInDirectory"];
+                        path = [RNFileSystem generatePathInDirectory:directory withExtension:@".jpg"];
+                    } else {
+                        path = [RNFileSystem generatePathInDirectory:[[RNFileSystem cacheDirectoryPath] stringByAppendingPathComponent:@"Camera"] withExtension:@".jpg"];
+                    }
 
                     if (![options[@"doNotSave"] boolValue]) {
                         response[@"uri"] = [RNImageUtils writeImage:destData toPath:path];
@@ -1101,8 +1107,10 @@ BOOL _sessionInterrupted = NO;
         NSString *path = nil;
         if (options[@"path"]) {
             path = options[@"path"];
-        }
-        else {
+        } else if (options[@"saveInDirectory"]) {
+            NSString *directory = options[@"saveInDirectory"];
+            path = [RNFileSystem generatePathInDirectory:directory withExtension:@".mov"];
+        } else {
             path = [RNFileSystem generatePathInDirectory:[[RNFileSystem cacheDirectoryPath] stringByAppendingPathComponent:@"Camera"] withExtension:@".mov"];
         }
 
